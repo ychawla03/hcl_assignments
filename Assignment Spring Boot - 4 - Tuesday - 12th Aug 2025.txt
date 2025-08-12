@@ -1,0 +1,82 @@
+Question - 4
+Spring Boot: Rest Controller Advice Setup
+6/11
+1.
+FizzException
+2.
+BuzzException
+3.
+FizzBuzzException
+Below is the endpoint for the
+GET
+API with a single path parameter:
+GET /controller_advice/{code}
+Exceptions are to be thrown based on the value of the path param {code} passed to the REST API.
+Here is a series of requests and their corresponding expected responses:
+GET
+request to
+/controller_advice/fizz
+:
+Should trigger the
+FizzException
+Should return the response code 500 and the
+GlobalError
+as the response body
+GET
+request to
+/controller_advice/buzz
+:
+Should trigger the
+BuzzException
+Should return the response code 400 and the
+GlobalError
+as the response body
+GET
+request to
+/controller_advice/fizzbuzz
+:
+Should trigger the
+FizzBuzzException
+Should return the response code 507 and the
+GlobalError
+as the response body
+GET
+request to
+/controller_advice/success
+:
+Should not trigger any exceptions
+Should return the response code 200 and the
+FizzBuzzResponse
+as the response body
+Complete the project so that it passes all the test cases when running the provided unit tests. To do so, implement a controller advice global exceptionhandler
+FizzBuzzExceptionHandler
+, intercept the runtime exceptions thrown from the
+GET
+API endpoint, and return a response entity wrapped in the
+GlobalError
+class.
+The runtime exceptions and error response classes are already predefined in the project. Complete the implementation controller
+GET
+API endpoint and thecontroller advice classes.
+Example requests and responses
+GET
+request to
+/controller_advice/fizz
+The response code is 500, and when converted to JSON, the response body is:
+{ "message": "Fizz Exception has been thrown", "errorReason" : "Internal Server Error"}
+GET
+request to
+/controller_advice/buzz
+The response code is 400, and when converted to JSON, the response body is:
+{ "message": "Buzz Exception has been thrown", "errorReason" : "Bad Request"}
+7/11
+GET
+request to
+/controller_advice/fizzbuzz
+The response code is 507, and when converted to JSON, the response body is:
+{ "message": "FizzBuzz Exception has been thrown", "errorReason" : "Insufficient Storage"}
+GET
+request to
+/controller_advice/success
+The response code is 200, and when converted to JSON, the response body is:
+{ "message": "Successfully completed fizzbuzz test", "statusCode": "200"}
