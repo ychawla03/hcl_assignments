@@ -113,8 +113,15 @@ Transactions for both methods will be committed.
 Question – 4
 Postgres Specific Service
 
+The requirement is to implement a Spring Boot @Service that should be loaded to the spring context only if the
+org.postgresql.Driver class is present on theclasspath, and the application.properties file contains the property
+database.vendor=postgres.
+
+
+<CODE HERE>
+@Service
 public class PostgresSpecificService {
-    /* not relevant code */
+/* not relevant code*/
 }
 
 Which of the following annotation options can replace <CODE HERE> to achieve this?
