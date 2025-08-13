@@ -1,0 +1,174 @@
+Question - 1
+Mocking Beans
+Given the following implementation of DataService which uses ApiClient component to call external APIs:
+
+@Component
+public class ApiClient {
+  public void call() {
+    //not relevant code
+  }
+}
+
+@Service
+public class DataService {
+  @Autowired
+  private ApiClient apiClient;
+
+  public void collectData() {
+    apiClient.call();
+  }
+}
+
+The requirement is to implement the test and not call the external API during the test execution. 
+The following code has been implemented:
+
+@SpringBootTest
+class DataServiceTest {
+  <CODE HERE>
+
+  @Autowired
+  DataService dataService;
+
+  @Test
+  void collectData() {
+    dataService.collectData();
+    //test code
+  }
+}
+
+What should be inserted instead of <CODE HERE> to achieve the goal?
+
+Options:
+
+@Mock ApiClient apiClient; @InjectMocks
+
+@InjectMocks @MockBean ApiClient apiClient;
+
+@Captor ApiClient apiClient;
+
+@SpyBean ApiClient apiClient;
+
+
+Question - 2
+Secure Method
+Given the following controller method, assume that usersService is correctly implemented and 
+autowired:
+
+<CODE_HERE>
+@GetMapping("/users/{id}")
+public ResponseEntity<UserResponse> get(@PathVariable @NotNull UUID id) {
+  return ResponseEntity.ok(usersService.get(id));
+}
+
+The requirement is to make sure that only users with any of ROLE_ADMIN or ROLE_USER_MANAGER roles 
+assigned will be able to execute this method.
+
+What can be put in place of <CODE_HERE> to implement this requirement using Spring Security?
+
+Options:
+
+@PostAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER_MANAGER')")
+
+@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER_MANAGER')")
+
+@Secured("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER_MANAGER')")
+
+@PreAuthorize("hasRole('ROLE_ADMIN') and hasRole('ROLE_USER_MANAGER')")
+
+Question - 3
+Transactional Tests
+Given the following test code:
+
+@ExtendWith(SpringExtension.class)
+@Transactional
+@ContextConfiguration
+class UserRepositoryTest {
+  @Test
+  @Commit
+  void test1() {
+    /* non relevant code */
+  }
+
+  @Test
+  @Rollback(false)
+  void test2() {
+    /* non relevant code */
+  }
+}
+
+Which of the statements is true?
+
+Options:
+
+Only the transaction for method test1() will be committed.
+
+Only the transaction for method test2() will be committed.
+
+Transactions for both methods will be committed.
+
+@Transactional will lead to a runtime error when running the tests.
+
+
+
+Question – 4
+Postgres Specific Service
+
+public class PostgresSpecificService {
+    /* not relevant code */
+}
+
+Which of the following annotation options can replace <CODE HERE> to achieve this?
+
+@ConditionalOnProperty(name = "database.vendor", value = "postgres")
+
+@ConditionalOnClass(name = "org.postgresql.Driver")
+
+@ConditionalOnProperty(prefix = "database", name = "vendor", havingValue = "postgres")
+
+@ConditionalOnClass(name = "org.postgresql.Driver")
+
+@ConditionalOnProperty(name = "database.vendor", havingValue = "postgres")
+
+@ConditionalOnMissingBean(org.postgresql.Driver.class)
+
+@ConditionalOnProperty(prefix = "database", name = "vendor", havingValue = "postgres")
+
+@ConditionalOnBean(name = "org.postgresql.Driver")
+
+None of the above
+
+Question – 5
+Bean Scopes
+
+Consider the following code:
+
+<CODE HERE>
+public class Processor {
+    public void process() {
+        /* not relevant code */
+    }
+}
+
+@RestController
+public class ProcessController {
+    @Autowired
+    private Processor processor;
+
+    @GetMapping("/process")
+    public void process() {
+        processor.process();
+    }
+}
+What should be inserted in place of <CODE HERE> to have a new instance of Processor created every time the /process endpoint is called?
+
+Options:
+
+@Scope("prototype") @Component
+
+@Prototype
+
+@Component @Scope(scopeName = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
+
+@Component(autowireCandidate = true)
+
+@Service(alwaysNew = true)
